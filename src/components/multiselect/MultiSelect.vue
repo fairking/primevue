@@ -363,7 +363,7 @@ export default {
         getLabelByValue(val) {
             let label = null;
 
-            if (!this.optionValue && this.options) {
+            if (this.options) {
                 for (let option of this.options) {
                     let optionValue = this.getOptionValue(option);
 
@@ -372,8 +372,6 @@ export default {
                         break;
                     }
                 }
-            } else if (this.optionLabel !== null) {
-                label = val[this.optionLabel];
             }
 
             return label;
