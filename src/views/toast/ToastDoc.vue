@@ -78,6 +78,18 @@ this.$toast.add({severity:'success', summary: 'Success Message', detail:'Order s
                                 <td>null</td>
                                 <td>Key of the Toast to display the message.</td>
                             </tr>
+                            <tr>
+                                <td>styleClass</td>
+                                <td>string</td>
+                                <td>null</td>
+                                <td>Style class of the message.</td>
+                            </tr>
+                            <tr>
+                                <td>contentStyleClass</td>
+                                <td>string</td>
+                                <td>null</td>
+                                <td>Style class of the content.</td>
+                            </tr>
 						</tbody>
 					</table>
 				</div>
@@ -159,6 +171,38 @@ this.$toast.add({severity:'success', summary: 'Specific Message', group: 'mykey'
 this.$toast.removeAllGroups();
 </CodeHighlight>
 
+                <h5>Templating</h5>
+                <p>Templating allows customizing the content where the message instance is available as the implicit variable.</p>
+<CodeHighlight>
+<template v-pre>
+&lt;Toast position="bottom-center" group="bc"&gt;
+    &lt;template #message="slotProps"&gt;
+        &lt;div class="p-d-flex p-flex-column"&gt;
+            &lt;div class="p-text-center"&gt;
+                &lt;i class="pi pi-exclamation-triangle" style="font-size: 3rem"&gt;&lt;/i&gt;
+                &lt;h4&gt;{{slotProps.message.summary}}&lt;/h4&gt;
+                &lt;p&gt;{{slotProps.message.detail}}&lt;/p&gt;
+            &lt;/div&gt;
+            &lt;div class="p-grid p-fluid"&gt;
+                &lt;div class="p-col-6"&gt;
+                    &lt;Button class="p-button-success" label="Yes" @click="onConfirm" /&gt;
+                &lt;/div&gt;
+                &lt;div class="p-col-6"&gt;
+                    &lt;Button class="p-button-secondary" label="No" @click="onReject" /&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/template&gt;
+&lt;/Toast&gt;
+</template>
+</CodeHighlight>
+
+                <h5>Responsive</h5>
+                <p>Toast styling can be adjusted per screen size with the <i>breakpoints</i> option. The value of <i>breakpoints</i> should be an object literal whose keys are the maximum screen sizes and values are the styles per screen. In example below, width of the toast messages cover the whole page on screens whose widths is smaller than 921px.</p>
+<CodeHighlight>
+&lt;Toast :breakpoints="&#123;'920px': &#123;width: '100%', right: '0', left: '0'&#125;&#125;"&gt;&lt;/Toast&gt;
+</CodeHighlight>
+
 				<h5>Properties</h5>
 				<div class="doc-tablewrapper">
 					<table class="doc-table">
@@ -194,6 +238,12 @@ this.$toast.removeAllGroups();
                                 <td>number</td>
                                 <td>0</td>
                                 <td>Base zIndex value to use in layering.</td>
+                            </tr>
+                            <tr>
+                                <td>breakpoints</td>
+                                <td>object</td>
+                                <td>null</td>
+                                <td>Object literal to define styles per screen size.</td>
                             </tr>
 						</tbody>
 					</table>

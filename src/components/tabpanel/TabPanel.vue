@@ -1,5 +1,5 @@
 <template>
-    <div class="p-tabview-panel" role="tabpanel" v-show="d_active">
+    <div class="p-tabview-panel" role="tabpanel" v-show="isTabActive()">
         <slot></slot>
     </div>
 </template>
@@ -9,17 +9,22 @@ export default {
     name: 'tabpanel',
     props: {
         header: null,
-        active: Boolean,
         disabled: Boolean
     },
     data() {
         return {
-            d_active: this.active
+            index: null
         }
     },
-    watch: {
-        active(newValue) {
-            this.d_active = newValue;
+    created() {
+        this.$parent.$children.forEach((child, i) => {
+            if (child === this) this.index = i
+        })
+    },
+    methods: {
+        isTabActive() {
+            let activeArray = this.$parent.d_activeIndex;
+            return this.$parent.multiple ? activeArray && activeArray.includes(this.index) :this.index === activeArray;
         }
     }
 }

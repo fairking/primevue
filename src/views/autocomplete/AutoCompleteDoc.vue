@@ -56,6 +56,13 @@ export default {
 &lt;AutoComplete field="label" v-model="selectedCountry" :suggestions="filteredCountriesBasic" @complete="searchCountryBasic($event)" /&gt;
 </CodeHighlight>
 
+                <h5>Force Selection</h5>
+        <p>ForceSelection mode validates the manual input to check whether it also exists in the suggestions list, if not the input value is cleared
+        to make sure the value passed to the model is always one of the suggestions. Simply enable <i>forceSelection</i> to enforce that input is always from the suggestion list.</p>
+<CodeHighlight>
+&lt;AutoComplete forceSelection v-model="brand" :suggestions="filteredBrands" @complete="searchBrand($event)" /&gt;
+</CodeHighlight>
+
 				<h5>Templating</h5>
 				<p>Item template allows displaying custom content inside the suggestions panel. The slotProps variable passed to the template provides an item property to represent an item in the suggestions collection.</p>
 <CodeHighlight>
@@ -148,6 +155,13 @@ export default {
                                 <td>null</td>
                                 <td>Id of the element or "body" for document where the overlay should be appended to.</td>
                             </tr>
+                            <tr>
+                                <td>forceSelection</td>
+                                <td>boolean</td>
+                                <td>false</td>
+                                <td>When present, autocomplete clears the manual input if it does not match of the suggestions to force only
+                                accepting values from the suggestions.</td>
+                            </tr>
 						</tbody>
 					</table>
 				</div>
@@ -200,6 +214,25 @@ export default {
 						</tbody>
 					</table>
 				</div>
+
+                <h5>Slots</h5>
+                <div class="doc-tablewrapper">
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Parameters</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>item</td>
+                                <td>item: Option instance <br />
+                                    index: Index of the option</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
 				<h5>Styling</h5>
 				<p>Following is the list of structural style classes</p>
@@ -257,8 +290,8 @@ export default {
 &lt;h5&gt;Basic&lt;/h5&gt;
 &lt;AutoComplete v-model="selectedCountry1" :suggestions="filteredCountries" @complete="searchCountry($event)" field="name" /&gt;
 
-&lt;h5&gt;Dropdown and Templating&lt;/h5&gt;
-&lt;AutoComplete v-model="selectedCountry2" :suggestions="filteredCountries" @complete="searchCountry($event)" :dropdown="true" field="name"&gt;
+&lt;h5&gt;Dropdown, Templating and Force Selection&lt;/h5&gt;
+&lt;AutoComplete v-model="selectedCountry2" :suggestions="filteredCountries" @complete="searchCountry($event)" :dropdown="true" field="name" forceSelection&gt;
     &lt;template #item="slotProps"&gt;
         &lt;div class="country-item"&gt;
             &lt;img src="../../assets/images/flag_placeholder.png" :class="'flag flag-' + slotProps.item.code.toLowerCase()" /&gt;

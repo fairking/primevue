@@ -190,6 +190,18 @@ data() {
                                 <td>comma</td>
                                 <td>Defines how the selected items are displayed, valid values are "comma" and "chip".</td>
                             </tr>
+                            <tr>
+                                <td>selectionLimit</td>
+                                <td>number</td>
+                                <td>null</td>
+                                <td>Maximum number of selectable items.</td>
+                            </tr>
+                            <tr>
+                                <td>showToggleAll</td>
+                                <td>boolean</td>
+                                <td>true</td>
+                                <td>Whether to show the header checkbox to toggle the selection of all items at once.</td>
+                            </tr>
 						</tbody>
 					</table>
 				</div>
@@ -263,13 +275,37 @@ data() {
                                 <td>Shows the overlay.</td>
                             </tr>
                             <tr>
-                                <td>Hide</td>
+                                <td>hide</td>
                                 <td>-</td>
                                 <td>Hides the overlay.</td>
                             </tr>
 						</tbody>
 					</table>
 				</div>
+
+                <h5>Slots</h5>
+                <div class="doc-tablewrapper">
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Parameters</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>value</td>
+                                <td>value: Value of the component <br />
+                                    placeholder: Placeholder prop value</td>
+                            </tr>
+                            <tr>
+                                <td>options</td>
+                                <td>option: Option instance <br />
+                                    index: Index of the option</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
 				<h5>Styling</h5>
 				<p>Following is the list of structural style classes, for theming classes visit <router-link to="/theming">theming</router-link> page.</p>

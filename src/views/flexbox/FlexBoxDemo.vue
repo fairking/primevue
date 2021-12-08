@@ -491,7 +491,7 @@
             </ul>
 
             <h5>Margin with FlexBox</h5>
-            <p>When combined with <router-link to="/setup">spacing utilities</router-link>, flexbox offers endless possibilities.</p>
+            <p>When combined with <router-link to="/spacing">spacing utilities</router-link>, flexbox offers endless possibilities.</p>
             <h6>Horizontal Spacing</h6>
 
 <CodeHighlight>
@@ -518,6 +518,9 @@
                 <div>Item 1</div>
                 <div class="p-mt-auto">Item 2</div>
             </div>
+
+            <h5>Dependencies</h5>
+			<p>PrimeFlex 2.0.0.</p>
         </div>
     </div>
 </template>

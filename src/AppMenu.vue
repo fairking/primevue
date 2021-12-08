@@ -26,7 +26,21 @@
                 <a href="https://www.primefaces.org/designer/api/primevue/2.0.1">SASS API</a>
             </div>
 
-            <div class="menu-category">PrimeFlex</div>
+            <div class="menu-category">PRIMEBLOCKS</div>
+            <div class="menu-image">
+                <a href="https://www.primefaces.org/primeblocks-vue">
+                    <img src="demo/images/banner-primeblocks.png" />
+                </a>
+            </div>
+
+            <div class="menu-category">PRIMEFLEX 3.0</div>
+            <div class="menu-image">
+                <a href="https://www.primefaces.org/primeflex">
+                    <img src="demo/images/banner-primeflex.svg" />
+                </a>
+            </div>
+
+            <div class="menu-category">PRIMEFLEX 2.0</div>
             <div class="menu-items">
                 <router-link to="/primeflex">Setup</router-link>
                 <router-link to="/display">Display</router-link>
@@ -76,12 +90,13 @@
             <div class="menu-category">Button</div>
             <div class="menu-items">
                 <router-link to="/button">Button</router-link>
+                <router-link to="/speeddial">Speed Dial <Tag value="New"></Tag></router-link>
                 <router-link to="/splitbutton">SplitButton</router-link>
             </div>
 
             <div class="menu-category">Data</div>
             <div class="menu-items">
-                <router-link to="/datatable" v-slot="{ href, route, navigate, isActive }">
+                <router-link to="/datatable" custom v-slot="{ href, route, navigate, isActive }">
                     <div>
                         <a tabindex="0" @click="toggleSubmenu($event, 'datatable')">DataTable</a>
                         <transition name="p-toggleable-content">
@@ -126,8 +141,8 @@
                 <router-link to="/organizationchart">OrganizationChart</router-link>
                 <router-link to="/paginator">Paginator</router-link>
                 <router-link to="/picklist">PickList</router-link>
-                <router-link to="/timeline">Timeline <span class="p-tag">New</span></router-link>
-                <router-link to="/tree" v-slot="{ href, route, navigate, isActive }">
+                <router-link to="/timeline">Timeline</router-link>
+                <router-link to="/tree" custom v-slot="{ href, route, navigate, isActive }">
                     <div>
                         <a tabindex="0" @click="toggleSubmenu($event, 'tree')">Tree</a>
                         <transition name="p-toggleable-content">
@@ -143,7 +158,7 @@
                         </transition>
                     </div>
                 </router-link>
-                <router-link to="/treetable" v-slot="{ href, route, navigate, isActive }">
+                <router-link to="/treetable" custom v-slot="{ href, route, navigate, isActive }">
                     <div>
                         <a tabindex="0" @click="toggleSubmenu($event, 'treetable')">TreeTable</a>
                         <transition name="p-toggleable-content">
@@ -201,6 +216,7 @@
                 <router-link to="/menumodel">MenuModel</router-link>
                 <router-link to="/breadcrumb">Breadcrumb</router-link>
                 <router-link to="/contextmenu">ContextMenu</router-link>
+                <router-link to="/dock">Dock <Tag value="new"></Tag></router-link>
                 <router-link to="/megamenu">MegaMenu</router-link>
                 <router-link to="/menu">Menu</router-link>
                 <router-link to="/menubar">Menubar</router-link>
@@ -210,7 +226,7 @@
                 <router-link to="/tieredmenu">TieredMenu</router-link>
             </div>
 
-            <div class="menu-category">Chart</div>
+            <div class="menu-category">Chart <Tag value="updated"></Tag></div>
             <div class="menu-items">
                 <router-link to="/chart">ChartModel</router-link>
                 <router-link to="/chart/pie">Pie</router-link>
@@ -231,7 +247,7 @@
             <div class="menu-category">Media</div>
             <div class="menu-items">
                 <router-link to="/carousel">Carousel</router-link>
-                <router-link to="/galleria" v-slot="{ href, route, navigate, isActive }">
+                <router-link to="/galleria" custom v-slot="{ href, route, navigate, isActive }">
                     <div>
                         <a tabindex="0" @click="toggleSubmenu($event, 'galleria')">Galleria</a>
                         <transition name="p-toggleable-content">
@@ -266,6 +282,7 @@
                 <router-link to="/progressbar">ProgressBar</router-link>
                 <router-link to="/progressspinner">ProgressSpinner</router-link>
                 <router-link to="/ripple">Ripple</router-link>
+                <router-link to="/styleclass">StyleClass <Tag value="New"></Tag></router-link>
                 <router-link to="/tag">Tag</router-link>
                 <router-link to="/terminal">Terminal</router-link>
             </div>

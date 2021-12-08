@@ -332,6 +332,11 @@ export default new Router({
 			component: () => import('./views/divider/DividerDemo.vue')
 		},
 		{
+			path: '/dock',
+			name: 'Dock',
+			component: () => import('./views/dock/DockDemo.vue')
+		},
+		{
 			path: '/dropdown',
 			name: 'dropdown',
 			component: () => import('./views/dropdown/DropdownDemo.vue')
@@ -567,6 +572,11 @@ export default new Router({
 			component: () => import('./views/spacing/SpacingDemo.vue')
         },
 		{
+			path: '/speeddial',
+			name: 'SpeedDial',
+			component: () => import('./views/speeddial/SpeedDialDemo.vue')
+        },
+		{
 			path: '/splitbutton',
 			name: 'splitbutton',
 			component: () => import('./views/splitbutton/SplitButtonDemo.vue')
@@ -590,6 +600,11 @@ export default new Router({
                 path: '/steps/confirmation',
                 component: () => import('./views/steps/ConfirmationDemo.vue')
             }]
+        },
+		{
+			path: '/styleclass',
+			name: 'styleclass',
+			component: () => import('./views/styleclass/StyleClassDemo.vue')
         },
         {
 			path: '/tabmenu',

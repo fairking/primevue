@@ -7,18 +7,43 @@
 <script>
 export default {
     props: {
-        multiple: Boolean
+        multiple: Boolean,
+        activeIndex: [Number,Array]
     },
-    methods: {
-        onToggle(tab) {
-            if (!this.multiple && !tab.d_active) {
-                this.$children.forEach(tab => tab.d_active = false);
-            }
+    data() {
+        return {
+            d_activeIndex: this.activeIndex
         }
     },
-    computed: {
-        tabs() {
-            return this.$children.filter(child => child.$vnode.tag.indexOf('accordiontab') !== -1);
+    watch: {
+        activeIndex(newValue) {
+            this.d_activeIndex = newValue;
+        }
+    },
+    methods: {
+        onToggle(event, tab, index, isActive) {
+            const eventName = isActive ? 'tab-close' : 'tab-open';
+
+            if (this.multiple) {
+                let x = this.d_activeIndex;
+
+                if (x && x.some(i => i === index)) {
+                    this.d_activeIndex = x.filter(i => i !== index);
+                }
+
+                else x ? this.d_activeIndex.push(index) : this.d_activeIndex = [index]
+            }
+
+            else {
+                index === this.d_activeIndex ? this.d_activeIndex = null : this.d_activeIndex = index;
+            }
+
+            this.$emit('update:activeIndex', this.d_activeIndex);
+
+            this.$emit(eventName, {
+                originalEvent: event,
+                index: index
+            });
         }
     }
 }

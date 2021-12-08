@@ -40,7 +40,7 @@ import FileUpload from 'primevue/fileupload';
 &lt;FileUpload mode="basic" name="demo[]" url="./upload" accept="image/*" /&gt;
 </CodeHighlight>
 
-				<h5>File Size and File Linit</h5>
+				<h5>File Size and File Limit</h5>
 				<p>Maximium file size can be restricted using <i>maxFileSize</i> property defined in bytes. Similarly <i>fileLimit</i> is available to restrict the number of files to be uploaded.</p>
 <CodeHighlight>
 &lt;FileUpload name="demo[]" url="./upload" :maxFileSize="1000000" :fileLimit="3" /&gt;
@@ -147,6 +147,12 @@ myUploader(event) {
                                 <td>"&#123;0&#125;: Invalid file size, file size should be smaller than &#123;1&#125;."</td>
                                 <td>Message of the invalid fize size.</td>
                             </tr>
+							<tr>
+								<td>invalidFileTypeMessage</td>
+								<td>string</td>
+								<td>"&#123;0&#125;: Invalid file type, allowed file types: &#123;1&#125;".</td>
+								<td>Message of the invalid file type.</td>
+							</tr>
                             <tr>
                                 <td>invalidFileLimitMessage</td>
                                 <td>string</td>
@@ -206,6 +212,18 @@ myUploader(event) {
 								<td>boolean</td>
 								<td>true</td>
 								<td>Whether to show the cancel button.</td>
+							</tr>
+							<tr>
+								<td>buttonStyle</td>
+								<td>any</td>
+								<td>null</td>
+								<td>Inline style of the component.</td>
+							</tr>
+							<tr>
+								<td>buttonClass</td>
+								<td>string</td>
+								<td>null</td>
+								<td>Style class of the component.</td>
 							</tr>
 						</tbody>
 					</table>
@@ -270,6 +288,24 @@ myUploader(event) {
 							<td>event.files: List of selected files.</td>
 							<td>Callback to invoke to implement a custom upload.</td>
 						</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<h5>Slots</h5>
+				<div class="doc-tablewrapper">
+					<table class="doc-table">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Parameters</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>empty</td>
+								<td>-</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>

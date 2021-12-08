@@ -5,14 +5,13 @@
 </template>
 
 <script>
-import * as Chart from 'chart.js';
+// import * as Chart from 'chart.js/auto';
 
 export default {
     props: {
         type: String,
         data: null,
         options: null,
-        plugins: null,
         width: Number,
         height: Number
     },
@@ -26,20 +25,27 @@ export default {
             this.chart = null;
         }
     },
+    watch: {
+        data() {
+            this.reinit();
+        },
+        type() {
+            this.reinit();
+        },
+        options() {
+            this.reinit();
+        }
+    },
     methods: {
         initChart() {
-
-			if (this.height)
-                this.$refs.canvas.height = this.height;
-                
-            if (this.width)
-				this.$refs.canvas.width = this.width;
-
-            this.chart = new Chart(this.$refs.canvas, {
-                type: this.type,
-                data: this.data,
-                options: this.options,
-                plugins: this.plugins
+            import('chart.js/auto').then((module) => {
+                if (module && module.default) {
+                    this.chart = new module.default(this.$refs.canvas, {
+                        type: this.type,
+                        data: this.data,
+                        options: this.options
+                    });
+                }
             });
         },
         getCanvas() {
@@ -61,13 +67,11 @@ export default {
         },
         onCanvasClick(event) {
             if (this.chart) {
-                const element = this.chart.getElementAtEvent(event);
-                const dataset = this.chart.getDatasetAtEvent(event);
+                const element = this.chart.getElementsAtEventForMode(event, 'nearest', { intersect: true }, false);
+                const dataset = this.chart.getElementsAtEventForMode(event, 'dataset', { intersect: true }, false);
 
                 if (element && element[0] && dataset) {
                     this.$emit('select', {originalEvent: event, element: element[0], dataset: dataset});
-                } else {
-                    this.$emit('click', event);
                 }
             }
         },

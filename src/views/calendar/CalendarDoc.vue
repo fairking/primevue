@@ -243,7 +243,7 @@ export default {
                                 <td>view</td>
                                 <td>string</td>
                                 <td>date</td>
-                                <td>Type of view to display, valid valids are "date" for datepicker and "month" for month picker.</td>
+                                <td>Type of view to display, valid values are "date" for datepicker and "month" for month picker.</td>
                             </tr>
                             <tr>
                                 <td>touchUI</td>
@@ -473,6 +473,32 @@ export default {
                                     event.year: New year
                                 </td>
                                 <td>Callback to invoke when a year is changed using the navigators.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h5>Slots</h5>
+                <div class="doc-tablewrapper">
+                    <table class="doc-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Parameters</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>header</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>date</td>
+                                <td>date: Value of the component</td>
+                            </tr>
+                            <tr>
+                                <td>footer</td>
+                                <td>-</td>
                             </tr>
                         </tbody>
                     </table>
