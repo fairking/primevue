@@ -1,20 +1,22 @@
 <template>
     <ul :class="containerClass" :role="root ? 'menubar' : 'menu'">
         <template v-for="(item, i) of model">
-            <li role="none" :class="getItemClass(item)" :style="item.style" v-if="visible(item) && !item.separator" :key="item.label + i"
+            <li role="none" :class="getItemClass(item)" :style="item.style" v-if="visible(item) && !item.separator" :key="label(item) + i"
                 @mouseenter="onItemMouseEnter($event, item)">
-                <router-link v-if="item.to && !item.disabled" :to="item.to" :class="getLinkClass(item)" v-ripple
-                    @click.native="onItemClick($event, item)" @keydown.native="onItemKeyDown($event, item)" role="menuitem">
-                    <span :class="['p-menuitem-icon', item.icon]"></span>
-                    <span class="p-menuitem-text">{{item.label}}</span>
+                <router-link v-if="item.to && !disabled(item)" :to="item.to" custom v-slot="{navigate, href, isActive, isExactActive}">
+                    <a :href="href" :class="linkClass(item, {isActive, isExactActive})" @click="onItemClick($event, item, navigate)" @keydown="onItemKeyDown($event, item)"
+                        role="menuitem" v-ripple>
+                        <span :class="['p-menuitem-icon', item.icon]"></span>
+                        <span class="p-menuitem-text">{{label(item)}}</span>
+                    </a>
                 </router-link>
-                <a v-else :href="item.url" :class="getLinkClass(item)" :target="item.target" :aria-haspopup="item.items != null" :aria-expanded="item === activeItem"
-                    @click="onItemClick($event, item)" @keydown="onItemKeyDown($event, item)" role="menuitem" :tabindex="item.disabled ? null : '0'" v-ripple>
+                <a v-else :href="item.url" :class="linkClass(item)" :target="item.target" :aria-haspopup="item.items != null" :aria-expanded="item === activeItem"
+                    @click="onItemClick($event, item)" @keydown="onItemKeyDown($event, item)" role="menuitem" :tabindex="disabled(item) ? null : '0'" v-ripple>
                     <span :class="['p-menuitem-icon', item.icon]"></span>
-                    <span class="p-menuitem-text">{{item.label}}</span>
+                    <span class="p-menuitem-text">{{label(item)}}</span>
                     <span :class="getSubmenuIcon()" v-if="item.items"></span>
                 </a>
-                <sub-menu :model="item.items" v-if="visible(item) && item.items" :key="item.label + '_sub_'" :mobileActive="mobileActive"
+                <sub-menu :model="item.items" v-if="visible(item) && item.items" :key="label(item) + '_sub_'" :exact="exact" :mobileActive="mobileActive"
                     @leaf-click="onLeafClick" @keydown-item="onChildItemKeyDown" :parentActive="item === activeItem" />
             </li>
             <li :class="['p-menu-separator', item.class]" :style="item.style" v-if="visible(item) && item.separator" :key="'separator' + i" role="separator"></li>
@@ -48,6 +50,10 @@ export default {
         mobileActive: {
             type: Boolean,
             default: false
+        },
+        exact: {
+            type: Boolean,
+            default: true
         }
     },
     documentClickListener: null,
@@ -73,7 +79,7 @@ export default {
     },
     methods: {
         onItemMouseEnter(event, item) {
-            if (item.disabled || this.mobileActive) {
+            if (this.disabled(item) || this.mobileActive) {
                 event.preventDefault();
                 return;
             }
@@ -87,8 +93,8 @@ export default {
                 this.activeItem = item;
             }
         },
-        onItemClick(event, item) {
-            if (item.disabled) {
+        onItemClick(event, item, navigate) {
+            if (this.disabled(item)) {
                 event.preventDefault();
                 return;
             }
@@ -113,6 +119,10 @@ export default {
 
             if (!item.items) {
                 this.onLeafClick();
+            }
+
+            if (item.to && navigate) {
+                navigate(event);
             }
         },
         onLeafClick() {
@@ -241,8 +251,12 @@ export default {
                 }
             ]
         },
-        getLinkClass(item) {
-            return ['p-menuitem-link', {'p-disabled': item.disabled}];
+        linkClass(item, routerProps) {
+            return ['p-menuitem-link', {
+                'p-disabled': this.disabled(item),
+                'router-link-active': routerProps && routerProps.isActive,
+                'router-link-active-exact': this.exact && routerProps && routerProps.isExactActive
+            }];
         },
         bindDocumentClickListener() {
             if (!this.documentClickListener) {
@@ -269,6 +283,12 @@ export default {
         },
         visible(item) {
             return (typeof item.visible === 'function' ? item.visible() : item.visible !== false);
+        },
+        disabled(item) {
+            return (typeof item.disabled === 'function' ? item.disabled() : item.disabled);
+        },
+        label(item) {
+            return (typeof item.label === 'function' ? item.label() : item.label);
         }
     },
     computed: {

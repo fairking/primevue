@@ -21,7 +21,9 @@
             </div>
         </div>
         <div class="p-multiselect-trigger">
-            <span class="p-multiselect-trigger-icon pi pi-chevron-down"></span>
+            <slot name="indicator">
+                 <span class="p-multiselect-trigger-icon pi pi-chevron-down"></span>
+            </slot>
         </div>
         <transition name="p-connected-overlay" @enter="onOverlayEnter" @leave="onOverlayLeave">
             <div ref="overlay" class="p-multiselect-panel p-component" v-if="overlayVisible">
@@ -121,6 +123,9 @@ export default {
     outsideClickListener: null,
     resizeListener: null,
     scrollHandler: null,
+    updated() {
+        this.onFilterUpdated();
+    },
     beforeDestroy() {
         this.restoreAppend();
         this.unbindOutsideClickListener();
@@ -417,6 +422,8 @@ export default {
         },
         onFilterChange(event) {
             this.$emit('filter', {originalEvent: event, value: event.target.value});
+        },
+        onFilterUpdated() {
             if (this.overlayVisible) {
                 this.alignOverlay();
             }

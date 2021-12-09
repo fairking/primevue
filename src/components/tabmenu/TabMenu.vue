@@ -2,14 +2,14 @@
     <div class="p-tabmenu p-component">
         <ul ref="nav" class="p-tabmenu-nav p-reset" role="tablist">
             <template v-for="(item,i) of model">
-                <li :key="item.label + '_' + i" :class="getItemClass(item)" :style="item.style" v-if="visible(item)" role="tab" :aria-selected="isActive(item)" :aria-expanded="isActive(item)">
-                    <router-link v-if="item.to && !item.disabled" :to="item.to" class="p-menuitem-link" @click.native="onItemClick($event, item)" role="presentation" v-ripple>
+                <li :key="label(item) + '_' + i" :class="getItemClass(item, i)" :style="item.style" v-if="visible(item)" role="tab" :aria-selected="isActive(item)" :aria-expanded="isActive(item)">
+                    <router-link v-if="item.to && !disabled(item)" :to="item.to" class="p-menuitem-link" @click.native="onItemClick($event, item, i)" role="presentation" v-ripple>
                         <span :class="getItemIcon(item)" v-if="item.icon"></span>
-                        <span class="p-menuitem-text">{{item.label}}</span>
+                        <span class="p-menuitem-text">{{label(item)}}</span>
                     </router-link>
-                    <a v-else :href="item.url" class="p-menuitem-link" :target="item.target" @click="onItemClick($event, item)" role="presentation" :tabindex="item.disabled ? null : '0'" v-ripple>
+                    <a v-else :href="item.url" class="p-menuitem-link" :target="item.target" @click="onItemClick($event, item, i)" role="presentation" :tabindex="disabled(item) ? null : '0'" v-ripple>
                         <span :class="getItemIcon(item)" v-if="item.icon"></span>
-                        <span class="p-menuitem-text">{{item.label}}</span>
+                        <span class="p-menuitem-text">{{label(item)}}</span>
                     </a>
                 </li>
             </template>
@@ -27,6 +27,15 @@ export default {
 		model: {
             type: Array,
             default: null
+        },
+        activeIndex: {
+            type: Number,
+            default: 0
+        }
+    },
+    data() {
+        return {
+            d_activeIndex: this.activeIndex
         }
     },
     mounted() {
@@ -35,9 +44,14 @@ export default {
     updated() {
         this.updateInkBar();
     },
+    watch: {
+        activeIndex(newValue) {
+            this.d_activeIndex = newValue;
+        }
+    },
     methods: {
-        onItemClick(event, item) {
-            if (item.disabled) {
+        onItemClick(event, item, index) {
+            if (this.disabled(item)) {
                 event.preventDefault();
                 return;
             }
@@ -48,14 +62,23 @@ export default {
                     item: item
                 });
             }
+
+            if (index !== this.d_activeIndex) {
+                this.d_activeIndex = index;
+                this.$emit('update:activeIndex', this.d_activeIndex);
+            }
+            this.$emit('tab-change', {
+                originalEvent: event,
+                index: index
+            });
         },
         isActive(item) {
             return this.activeRoute.startsWith(item.to);
         },
-        getItemClass(item) {
+        getItemClass(item, index) {
             return ['p-tabmenuitem', item.class, {
-                'p-highlight': this.isActive(item),
-                'p-disabled': item.disabled
+                'p-highlight': this.isActive(item) || this.d_activeIndex === index,
+                'p-disabled': this.disabled(item)
             }];
         },
         getItemIcon(item) {
@@ -63,6 +86,12 @@ export default {
         },
         visible(item) {
             return (typeof item.visible === 'function' ? item.visible() : item.visible !== false);
+        },
+        disabled(item) {
+            return (typeof item.disabled === 'function' ? item.disabled() : item.disabled);
+        },
+        label(item) {
+            return (typeof item.label === 'function' ? item.label() : item.label);
         },
         findActiveTabIndex() {
             if (this.model) {

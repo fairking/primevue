@@ -122,6 +122,31 @@
 
             <div class="p-grid">
                 <div class="p-col-12 p-md-3">
+                    <a href="https://www.primefaces.org/sakai-vue">
+                        <img alt="Sakai" src="../assets/images/layouts/sakai-vue.jpg">
+                    </a>
+                </div>
+                <div class="p-col-12 p-md-3">
+                    <a href="https://www.primefaces.org/layouts/atlantis-vue">
+                        <img alt="Atlantis" src="../assets/images/layouts/atlantis-vue.jpg">
+                    </a>
+                </div>
+                <div class="p-col-12 p-md-3">
+                    <a href="https://www.primefaces.org/layouts/freya-vue">
+                        <img alt="Freya" src="../assets/images/layouts/freya-vue.png">
+                    </a>
+                </div>
+                <div class="p-col-12 p-md-3">
+                    <a href="https://www.primefaces.org/layouts/ultima-vue">
+                        <img alt="Ultima" src="../assets/images/layouts/ultima-vue.jpg">
+                    </a>
+                </div>
+                <div class="p-col-12 p-md-3">
+                    <a href="https://www.primefaces.org/layouts/diamond-vue">
+                        <img alt="Diamond" src="../assets/images/layouts/diamond-vue.jpg">
+                    </a>
+                </div>
+                <div class="p-col-12 p-md-3">
                     <a href="https://www.primefaces.org/layouts/sapphire-vue">
                         <img alt="Sapphire" src="../assets/images/layouts/sapphire-vue.jpg">
                     </a>
@@ -152,28 +177,11 @@
                     </a>
                 </div>
                 <div class="p-col-12 p-md-3">
-                    <a href="https://www.primefaces.org/layouts/ultima-vue">
-                        <img alt="Ultima" src="../assets/images/layouts/ultima-vue.jpg">
-                    </a>
-                </div>
-                <div class="p-col-12 p-md-3">
                     <a href="https://www.primefaces.org/layouts/prestige-vue">
                         <img alt="Prestige" src="../assets/images/layouts/prestige-vue.jpg">
                     </a>
                 </div>
                 <div class="p-col-12 p-md-3"></div>
-            </div>
-        </div>
-        <div class="templates">
-            <h4>Free Application Template for PrimeVue</h4>
-            <p>Sigma is a free and open source admin template based on <a href="https://cli.vuejs.org">Vue-CLI</a>.</p>
-
-            <div class="p-grid">
-                <div class="p-col-12">
-                    <a href="https://www.primefaces.org/sigma-vue">
-                        <img alt="Sigma" src="../assets/images/layouts/sigma.jpg" />
-                    </a>
-                </div>
             </div>
         </div>
 
@@ -224,7 +232,7 @@
                     <p>No time to wait for a response at forum or issue tracker? Then PrimeVue PRO Support is definitely for you.</p>
                     <p>PrimeVUE PRO is an exceptional support service where you'll contact the PrimeTek via a private channel and receive assistance just in a couple of hours. Optionally PrimeVue PRO offers the ability to request changes and new features for the component library.</p>
                     <a class="action-button" href="mailto:contact@primetek.com.tr">
-                        Get a Quote
+                        LEARN MORE
                     </a>
                 </div>
                 <div class="p-col-12 p-md-6">

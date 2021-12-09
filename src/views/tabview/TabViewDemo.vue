@@ -111,6 +111,21 @@
                     </TabPanel>
                 </TabView>
             </div>
+
+            <div class="card">
+                <h5>Scrollable</h5>
+                <div class="p-py-2">
+                    <Button @click="active2 = 0" class="p-button-text" label="Activate 1st" />
+                    <Button @click="active2 = 29" class="p-button-text p-mr-2" label="Activate 30th" />
+                    <Button @click="active2 = 49" class="p-button-text p-mr-2" label="Activate 50th" />
+                </div>
+
+                <TabView :activeIndex.sync="active2" :scrollable="true">
+                    <TabPanel v-for="tab in scrollableTabs" :key="tab.title" :header="tab.title">
+                        <p>{{tab.content}}</p>
+                    </TabPanel>
+                </TabView>
+            </div>
         </div>
 
         <TabViewDoc/>
@@ -124,7 +139,8 @@ import EventBus from '@/EventBus';
 export default {
     data() {
         return {
-            active: [true, false, false]
+            active: [true, false, false],
+            scrollableTabs: Array.from({ length: 50 }, (_, i) => ({ title: `Tab ${i + 1}`, content: `Tab ${i + 1} Content` }))
         }
     },
     timeout: null,

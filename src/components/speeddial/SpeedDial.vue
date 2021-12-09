@@ -2,13 +2,13 @@
     <div>
         <div ref="container" :class="containerClass" :style="styles">
             <slot name="button" :toggle="onClick">
-                <SDButton type="button" :class="buttonClass" :icon="iconClassName" @click="onClick($event)" :disabled="disabled" />
+                <SDButton type="button" :class="buttonClassName" :icon="iconClassName" @click="onClick($event)" :disabled="disabled" />
             </slot>
             <ul ref="list" class="p-speeddial-list" role="menu">
                 <li v-for="(item, index) of model" :key="index" class="p-speeddial-item" :style="getItemStyle(index)" role="none">
                     <template v-if="!$slots.item">
                         <a :href="item.url || '#'" role="menuitem" :class="['p-speeddial-action', { 'p-disabled': item.disabled }]" :target="item.target"
-                            :data-pr-tooltip="item.label" @click="onItemClick($event, item)" v-ripple>
+                            v-tooltip:[tooltipOptions]="{value: item.label, disabled: !tooltipOptions}" @click="onItemClick($event, item)" v-ripple>
                             <span v-if="item.icon" :class="['p-speeddial-action-icon', item.icon]"></span>
                         </a>
                     </template>
@@ -17,7 +17,7 @@
             </ul>
         </div>
         <template v-if="mask">
-            <div :class="maskClass" :style="this.maskStyle"></div>
+            <div :class="maskClassName" :style="maskStyle"></div>
         </template>
     </div>
 </template>
@@ -62,9 +62,9 @@ export default {
             type: Boolean,
             default: true
         },
-        buttonClassName: null,
+        buttonClass: null,
         maskStyle: null,
-        maskClassName: null,
+        maskClass: null,
         showIcon: {
             type: String,
             default: 'pi pi-plus'
@@ -74,6 +74,7 @@ export default {
             type: Boolean,
             default: true
         },
+        tooltipOptions: null,
         styles: null,
         className: null
     },
@@ -222,18 +223,18 @@ export default {
                 'p-disabled': this.disabled
             }, this.className];
         },
-        buttonClass() {
+        buttonClassName() {
             return ['p-speeddial-button p-button-rounded', {
                 'p-speeddial-rotate': this.rotateAnimation && !this.hideIcon
-            }, this.buttonClassName];
+            }, this.buttonClass];
         },
         iconClassName() {
             return this.d_visible && !!this.hideIcon ? this.hideIcon : this.showIcon;
         },
-        maskClass() {
+        maskClassName() {
             return ['p-speeddial-mask', {
                 'p-speeddial-mask-visible': this.d_visible
-            }, this.maskClassName];
+            }, this.maskClass];
         }
     },
     components: {

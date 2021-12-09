@@ -36,9 +36,9 @@ const items: [
                         <tbody>
                             <tr>
                                 <td>label</td>
-                                <td>string</td>
+                                <td>string|function</td>
                                 <td>null</td>
-                                <td>Text of the item.</td>
+                                <td>Property name or getter function to use as the label of an item.</td>
                             </tr>
                             <tr>
                                 <td>icon</td>
@@ -72,9 +72,9 @@ const items: [
                             </tr>
                             <tr>
                                 <td>disabled</td>
-                                <td>boolean</td>
+                                <td>boolean/function</td>
                                 <td>false</td>
-                                <td>When set as true, disables the menuitem.</td>
+                                <td>A boolean or a function to return a boolean to specify if the item is disabled.</td>
                             </tr>
                             <tr>
                                 <td>visible</td>

@@ -3,13 +3,15 @@
         <ul role="tablist">
             <template v-for="(item,index) of model">
                 <li v-if="visible(item)" :key="item.to" :class="getItemClass(item)" :style="item.style" role="tab" :aria-selected="isActive(item)" :aria-expanded="isActive(item)">
-                    <router-link :to="item.to" class="p-menuitem-link" @click.native="onItemClick($event, item)" v-if="!isItemDisabled(item)" role="presentation">
-                        <span class="p-steps-number">{{index + 1}}</span>
-                        <span class="p-steps-title">{{item.label}}</span>
+                    <router-link :to="item.to" v-if="!isItemDisabled(item)" custom v-slot="{navigate, href, isActive, isExactActive}" >
+                        <a :href="href" :class="linkClass({isActive, isExactActive})" @click.native="onItemClick($event, item, navigate)" role="presentation">
+                            <span class="p-steps-number">{{index + 1}}</span>
+                            <span class="p-steps-title">{{label(item)}}</span>
+                        </a>
                     </router-link>
-                    <span v-else class="p-menuitem-link" role="presentation">
+                    <span v-else :class="linkClass()" role="presentation">
                         <span class="p-steps-number">{{index + 1}}</span>
-                        <span class="p-steps-title">{{item.label}}</span>
+                        <span class="p-steps-title">{{label(item)}}</span>
                     </span>
                 </li>
             </template>
@@ -33,11 +35,15 @@ export default {
         readonly: {
             type: Boolean,
             default: true
+        },
+        exact: {
+            type: Boolean,
+            default: true
         }
     },
     methods: {
-        onItemClick(event, item) {
-            if (item.disabled || this.readonly) {
+        onItemClick(event, item, navigate) {
+            if (this.disabled(item) || this.readonly) {
                 event.preventDefault();
                 return;
             }
@@ -47,6 +53,10 @@ export default {
                     originalEvent: event,
                     item: item
                 });
+            }
+
+            if (item.to && navigate) {
+                navigate(event);
             }
         },
         isActive(item) {
@@ -58,11 +68,23 @@ export default {
                 'p-disabled': this.isItemDisabled(item)
             }];
         },
+        linkClass(routerProps) {
+            return ['p-menuitem-link', {
+                'router-link-active': routerProps && routerProps.isActive,
+                'router-link-active-exact': this.exact && routerProps && routerProps.isExactActive
+            }];
+        },
         isItemDisabled(item) {
-            return (item.disabled || (this.readonly && !this.isActive(item)));
+            return (this.disabled(item) || (this.readonly && !this.isActive(item)));
         },
         visible(item) {
             return (typeof item.visible === 'function' ? item.visible() : item.visible !== false);
+        },
+        disabled(item) {
+            return (typeof item.disabled === 'function' ? item.disabled() : item.disabled);
+        },
+        label(item) {
+            return (typeof item.label === 'function' ? item.label() : item.label);
         }
     },
     computed: {

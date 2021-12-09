@@ -13,12 +13,14 @@
         </span>
         <i v-if="showClear && value != null" class="p-dropdown-clear-icon pi pi-times" @click="onClearClick($event)"></i>
         <div class="p-dropdown-trigger" role="button" aria-haspopup="listbox" :aria-expanded="overlayVisible">
-            <span class="p-dropdown-trigger-icon pi pi-chevron-down"></span>
+            <slot name="indicator">
+                <span class="p-dropdown-trigger-icon pi pi-chevron-down"></span>
+            </slot>
         </div>
         <transition name="p-connected-overlay" @enter="onOverlayEnter" @leave="onOverlayLeave">
             <div ref="overlay" class="p-dropdown-panel p-component" v-if="overlayVisible">
                 <div class="p-dropdown-header" v-if="filter">
-                     <div  class="p-dropdown-filter-container">
+                     <div class="p-dropdown-filter-container">
                         <input type="text" ref="filterInput" v-model="filterValue" autoComplete="off" class="p-dropdown-filter p-inputtext p-component" :placeholder="filterPlaceholder" @keydown="onFilterKeyDown"  @input="onFilterChange"/>
                         <span class="p-dropdown-filter-icon pi pi-search"></span>
                     </div>
@@ -83,6 +85,11 @@ export default {
             overlayVisible: false
         };
     },
+    watch: {
+        value() {
+            this.isModelValueChanged = true;
+        }
+    },
     outsideClickListener: null,
     scrollHandler: null,
     resizeListener: null,
@@ -90,6 +97,15 @@ export default {
     currentSearchChar: null,
     previousSearchChar: null,
     searchValue: null,
+    isValueChanged: false,
+    updated() {
+        if (this.overlayVisible && this.isModelValueChanged) {
+            this.scrollValueInView();
+        }
+        this.isModelValueChanged = false;
+
+        this.onFilterUpdated();
+    },
     beforeDestroy() {
         this.restoreAppend();
         this.unbindOutsideClickListener();
@@ -371,7 +387,7 @@ export default {
         bindResizeListener() {
             if (!this.resizeListener) {
                 this.resizeListener = () => {
-                    if (this.overlayVisible && !DomHandler.isAndroid()) {
+                    if (this.overlayVisible && !DomHandler.isTouchDevice()) {
                         this.hide();
                     }
                 };
@@ -393,7 +409,7 @@ export default {
                 clearTimeout(this.searchTimeout);
             }
 
-            const char = String.fromCharCode(event.keyCode);
+            const char = event.key;
             this.previousSearchChar = this.currentSearchChar;
             this.currentSearchChar = char;
 
@@ -455,10 +471,20 @@ export default {
         },
         onFilterChange(event) {
             this.$emit('filter', {originalEvent: event, value: event.target.value});
+        },
+        onFilterUpdated() {
             if (this.overlayVisible) {
                 this.alignOverlay();
             }
-        }
+        },
+        scrollValueInView() {
+            if (this.$refs.overlay) {
+                let selectedItem = DomHandler.findSingle(this.$refs.overlay, 'li.p-highlight');
+                if (selectedItem) {
+                    selectedItem.scrollIntoView({ block: 'nearest', inline: 'start' });
+                }
+            }
+        },
     },
     computed: {
         visibleOptions() {

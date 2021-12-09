@@ -1,6 +1,9 @@
 
 @media screen and (max-width: 960px) {
     .layout-wrapper.layout-news-active {
+        .layout-news-button {
+            display: none;
+        }
         .layout-content {
             padding-top: 180px;
         }
@@ -75,9 +78,9 @@
         padding-top: 110px;
 
         .content-section {
-            &.introduction { 
+            &.introduction {
                 flex-direction: column;
-                
+
                 .app-inputstyleswitch {
                     margin-top: 1.5rem;
                 }

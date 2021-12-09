@@ -2,6 +2,7 @@
     <td :style="column.bodyStyle" :class="containerClass" @click="onClick" @keydown="onKeyDown">
         <ColumnSlot :data="rowData" :column="column" :index="index" type="body" v-if="column.$scopedSlots.body && !d_editing" />
         <ColumnSlot :data="rowData" :column="column" :index="index" type="editor" v-else-if="column.$scopedSlots.editor && d_editing" />
+        <ColumnSlot :data="rowData" :column="column" :index="index" type="body" v-else-if="!column.$scopedSlots.editor && column.$scopedSlots.body && d_editing" />
         <template v-else-if="column.selectionMode">
             <DTRadioButton :value="rowData" :checked="selected" @change="toggleRowWithRadio" v-if="column.selectionMode === 'single'" />
             <DTCheckbox :value="rowData" :checked="selected" @change="toggleRowWithCheckbox" v-else-if="column.selectionMode ==='multiple'" />
@@ -84,10 +85,13 @@ export default {
         this.children = this.$children;
     },
     updated() {
-        let query = this.editMode === 'row' ? '[autofocus]' : 'input';
-        let focusable = DomHandler.findSingle(this.$el, query);
-        if (focusable && document.activeElement != focusable) {
-            focusable.focus();
+        if (this.d_editing && this.editMode) {
+            let query = this.editMode === 'row' ? '[autofocus]' : 'input';
+            let focusable = DomHandler.findSingle(this.$el, query);
+
+            if (focusable && document.activeElement != focusable) {
+                focusable.focus();
+            }
         }
     },
     methods: {

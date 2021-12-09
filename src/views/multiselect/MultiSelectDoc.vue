@@ -96,19 +96,19 @@ data() {
                             </tr>
                             <tr>
                                 <td>optionLabel</td>
-                                <td>string</td>
+                                <td>string | function</td>
                                 <td>null</td>
                                 <td>Property name or getter function to use as the label of an option.</td>
                             </tr>
                             <tr>
                                 <td>optionValue</td>
-                                <td>string</td>
+                                <td>string | function</td>
                                 <td>null</td>
                                 <td>Property name or getter function to use as the value of an option, defaults to the option itself when not defined.</td>
                             </tr>
                             <tr>
                                 <td>optionDisabled</td>
-                                <td>boolean</td>
+                                <td>string | function</td>
                                 <td>null</td>
                                 <td>Property name or getter function to use as the disabled flag of an option, defaults to false when not defined.</td>
                             </tr>
@@ -302,6 +302,10 @@ data() {
                                 <td>options</td>
                                 <td>option: Option instance <br />
                                     index: Index of the option</td>
+                            </tr>
+                            <tr>
+                                <td>indicator</td>
+                                <td>-</td>
                             </tr>
                         </tbody>
                     </table>

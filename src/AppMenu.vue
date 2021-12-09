@@ -54,7 +54,7 @@
 
             <div class="menu-category">PrimeIcons</div>
             <div class="menu-items">
-                <router-link to="/icons">Icons v4.1</router-link>
+                <router-link to="/icons">Icons v5</router-link>
             </div>
 
             <div class="menu-category">Form</div>
@@ -90,7 +90,7 @@
             <div class="menu-category">Button</div>
             <div class="menu-items">
                 <router-link to="/button">Button</router-link>
-                <router-link to="/speeddial">Speed Dial <Tag value="New"></Tag></router-link>
+                <router-link to="/speeddial">Speed Dial</router-link>
                 <router-link to="/splitbutton">SplitButton</router-link>
             </div>
 
@@ -192,7 +192,7 @@
                 <router-link to="/panel">Panel</router-link>
                 <router-link to="/splitter">Splitter</router-link>
                 <router-link to="/scrollpanel">ScrollPanel</router-link>
-                <router-link to="/tabview">TabView</router-link>
+                <router-link to="/tabview">TabView <Tag value="New"></Tag></router-link>
                 <router-link to="/toolbar">Toolbar</router-link>
             </div>
 
@@ -216,7 +216,7 @@
                 <router-link to="/menumodel">MenuModel</router-link>
                 <router-link to="/breadcrumb">Breadcrumb</router-link>
                 <router-link to="/contextmenu">ContextMenu</router-link>
-                <router-link to="/dock">Dock <Tag value="new"></Tag></router-link>
+                <router-link to="/dock">Dock</router-link>
                 <router-link to="/megamenu">MegaMenu</router-link>
                 <router-link to="/menu">Menu</router-link>
                 <router-link to="/menubar">Menubar</router-link>
@@ -226,7 +226,7 @@
                 <router-link to="/tieredmenu">TieredMenu</router-link>
             </div>
 
-            <div class="menu-category">Chart <Tag value="updated"></Tag></div>
+            <div class="menu-category">Chart</div>
             <div class="menu-items">
                 <router-link to="/chart">ChartModel</router-link>
                 <router-link to="/chart/pie">Pie</router-link>
@@ -268,6 +268,7 @@
                         </transition>
                     </div>
                 </router-link>
+                <router-link to="/imagepreview">Image Preview <Tag value="New"></Tag></router-link>
             </div>
 
             <div class="menu-category">Misc</div>
@@ -282,7 +283,7 @@
                 <router-link to="/progressbar">ProgressBar</router-link>
                 <router-link to="/progressspinner">ProgressSpinner</router-link>
                 <router-link to="/ripple">Ripple</router-link>
-                <router-link to="/styleclass">StyleClass <Tag value="New"></Tag></router-link>
+                <router-link to="/styleclass">StyleClass</router-link>
                 <router-link to="/tag">Tag</router-link>
                 <router-link to="/terminal">Terminal</router-link>
             </div>

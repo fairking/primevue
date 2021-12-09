@@ -13,19 +13,19 @@ const MultiSelectProps = [
     },
     {
         name: "optionLabel",
-        type: "string",
+        type: "string | function",
         default: "null",
         description: "Property name or getter function to use as the label of an option."
     },
     {
         name: "optionValue",
-        type: "string",
+        type: "string | function",
         default: "null",
         description: "Property name or getter function to use as the value of an option, defaults to the option itself when not defined."
     },
     {
         name: "optionDisabled",
-        type: "boolean",
+        type: "string | function",
         default: "null",
         description: "Property name or getter function to use as the disabled flag of an option, defaults to false when not defined."
     },
@@ -191,6 +191,10 @@ const MultiSelectSlots = [
     {
         name: "value",
         description: "Custom content for the item value"
+    },
+    {
+        name: "indicator",
+        description: "Custom content for the multiselect indicator"
     }
 ];
 

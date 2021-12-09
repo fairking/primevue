@@ -1,6 +1,6 @@
 <template>
     <div :class="containerClass" :style="styles">
-        <DockSub :model="model" :templates="$scopedSlots"></DockSub>
+        <DockSub :model="model" :templates="$scopedSlots" :exact="exact" :tooltipOptions="tooltipOptions"></DockSub>
     </div>
 </template>
 
@@ -16,7 +16,12 @@ export default {
         },
         model: null,
         className: null,
-        styles: null
+        styles: null,
+        tooltipOptions: null,
+        exact: {
+            type: Boolean,
+            default: true
+        }
     },
     data() {
         return {
@@ -66,6 +71,11 @@ export default {
     justify-content: center;
     align-items: center;
     pointer-events: none;
+}
+
+.p-dock-list-container {
+    display: flex;
+    pointer-events: auto;
 }
 
 .p-dock-list {

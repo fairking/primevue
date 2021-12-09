@@ -2,12 +2,6 @@
 	<div class="content-section documentation">
 		<TabView>
 			<TabPanel header="Documentation">
-                <h5>Mitt EventBus</h5>
-                <p>ConfirmDialog requires <a href="https://www.npmjs.com/package/mitt">Mitt</a>, a tiny 200b EventBus implementation.</p>
-<CodeHighlight>
-npm install mitt --save
-</CodeHighlight>
-
                 <h5>ConfirmationService</h5>
                 <p>ConfirmDialog is controlled via the <i>ConfirmationService</i> that needs to be installed globally before the application
                     instance is created.</p>
@@ -117,7 +111,7 @@ export default {
                                 <td>null</td>
                                 <td>Callback to execute when action is rejected.</td>
                             </tr>
-                             <tr>
+                            <tr>
                                 <td>acceptLabel</td>
                                 <td>string</td>
                                 <td>null</td>
@@ -158,6 +152,12 @@ export default {
                                 <td>boolean</td>
                                 <td>true</td>
                                 <td>Whether background scroll should be blocked when dialog is visible.</td>
+                            </tr>
+                            <tr>
+                                <td>defaultFocus</td>
+                                <td>string</td>
+                                <td>null</td>
+                                <td>Element to receive the focus when the dialog gets visible, valid values are "accept" and "reject".</td>
                             </tr>
                         </tbody>
                     </table>
@@ -206,7 +206,7 @@ export default {
 				</div>
 
 				<h5>Dependencies</h5>
-				<p>Mitt.</p>
+				<p>None.</p>
 			</TabPanel>
 
 			<TabPanel header="Source">

@@ -12,7 +12,9 @@
         <ul ref="topbarMenu" class="topbar-menu">
             <li><router-link to="/setup">Get Started</router-link></li>
             <li class="topbar-submenu">
-                <a tabindex="0" @click="toggleMenu($event, 0)">Themes</a>
+                <a tabindex="0" @click="toggleMenu($event, 0)">
+                    <span v-badge.danger>Themes</span>
+                </a>
                 <transition name="p-connected-overlay" @enter="onMenuEnter">
                     <ul v-show="activeMenuIndex === 0">
                         <li class="topbar-submenu-header">THEMING</li>
@@ -38,10 +40,23 @@
                         <li><a @click="changeTheme($event, 'mdc-dark-indigo', true)"><img src="demo/images/themes/md-dark-indigo.svg" alt="Indigo Dark" /><span>Indigo Dark</span></a></li>
                         <li><a @click="changeTheme($event, 'mdc-dark-deeppurple', true)"><img src="demo/images/themes/md-dark-deeppurple.svg" alt="Deep Purple Dark" /><span>Deep Purple Dark</span></a></li>
 
+                        <li class="topbar-submenu-header">TAILWIND</li>
+                        <li><a @click="changeTheme($event, 'tailwind-light')"><img src="demo/images/themes/tailwind-light.png" alt="Tailwind Light" /><span>Tailwind Light</span></a></li>
+
                         <li class="topbar-submenu-header">FLUENT UI</li>
                         <li><a @click="changeTheme($event, 'fluent-light')"><img src="demo/images/themes/fluent-light.png" alt="Fluent Light" /><span>Fluent Light</span></a></li>
 
-                        <li class="topbar-submenu-header">PRIMEONE</li>
+                        <li class="topbar-submenu-header p-d-flex p-ai-center">PRIMEONE 2022 <Tag class="p-ml-3" value="NEW" rounded severity="success"></Tag></li>
+                        <li><a @click="changeTheme($event, 'lara-light-indigo')"><img src="demo/images/themes/lara-light-indigo.png" alt="Lara Light Indigo" /><span>Lara Light Indigo</span></a></li>
+                        <li><a @click="changeTheme($event, 'lara-light-blue')"><img src="demo/images/themes/lara-light-blue.png" alt="Lara Light Blue" /><span>Lara Light Blue</span></a></li>
+                        <li><a @click="changeTheme($event, 'lara-light-purple')"><img src="demo/images/themes/lara-light-purple.png" alt="Lara Light Purple" /><span>Lara Light Purple</span></a></li>
+                        <li><a @click="changeTheme($event, 'lara-light-teal')"><img src="demo/images/themes/lara-light-teal.png" alt="Lara Light Teal" /><span>Lara Light Teal</span></a></li>
+                        <li><a @click="changeTheme($event, 'lara-dark-blue')"><img src="demo/images/themes/lara-dark-blue.png" alt="Lara Dark Blue" /><span>Lara Dark Blue</span></a></li>
+                        <li><a @click="changeTheme($event, 'lara-dark-indigo')"><img src="demo/images/themes/lara-dark-indigo.png" alt="Lara Dark Indigo" /><span>Lara Dark Indigo</span></a></li>
+                        <li><a @click="changeTheme($event, 'lara-dark-purple')"><img src="demo/images/themes/lara-dark-purple.png" alt="Lara Dark Purple" /><span>Lara Dark Purple</span></a></li>
+                        <li><a @click="changeTheme($event, 'lara-dark-teal')"><img src="demo/images/themes/lara-dark-teal.png" alt="Lara Dark Teal" /><span>Lara Dark Teal</span></a></li>
+
+                        <li class="topbar-submenu-header">PRIMEONE 2021</li>
                         <li><a @click="changeTheme($event, 'saga-blue')"><img src="demo/images/themes/saga-blue.png" alt="Saga Blue" /><span>Saga Blue</span></a></li>
                         <li><a @click="changeTheme($event, 'saga-green')"><img src="demo/images/themes/saga-green.png" alt="Saga Green" /><span>Saga Green</span></a></li>
                         <li><a @click="changeTheme($event, 'saga-orange')"><img src="demo/images/themes/saga-orange.png" alt="Saga Orange" /><span>Saga Orange</span></a></li>
@@ -79,8 +94,11 @@
                 <transition name="p-connected-overlay" @enter="onMenuEnter">
                     <ul v-show="activeMenuIndex === 1">
                         <li class="topbar-submenu-header">FREE ADMIN TEMPLATE</li>
-                        <li><a href="https://www.primefaces.org/sigma-vue"><img src="./assets/images/layouts/themeswitcher-sigma.png" alt="Sigma" /><span>Sigma</span></a></li>
+                        <li><a href="https://www.primefaces.org/sakai-vue"><img src="./assets/images/layouts/themeswitcher-sakai.svg" alt="Sakai" /><span>Sakai</span></a></li>
                         <li class="topbar-submenu-header">PREMIUM ADMIN TEMPLATES</li>
+                        <li><a href="https://www.primefaces.org/layouts/atlantis-vue"><img src="./assets/images/layouts/themeswitcher-atlantis.svg" alt="Atlantis" /><span>Atlantis</span></a></li>
+                        <li><a href="https://www.primefaces.org/layouts/freya-vue"><img src="./assets/images/layouts/themeswitcher-freya.png" alt="Freya" /><span>Freya</span></a></li>
+                        <li><a href="https://www.primefaces.org/layouts/diamond-vue"><img src="./assets/images/layouts/themeswitcher-diamond.png" alt="Diamond" /><span>Diamond</span></a></li>
                         <li><a href="https://www.primefaces.org/layouts/sapphire-vue"><img src="./assets/images/layouts/themeswitcher-sapphire.png" alt="Sapphire" /><span>Sapphire</span><span class="theme-badge material">material</span></a></li>
                         <li><a href="https://www.primefaces.org/layouts/serenity-vue"><img src="./assets/images/layouts/themeswitcher-serenity.png" alt="Serenity" /><span>Serenity</span><span class="theme-badge material">material</span></a></li>
                         <li><a href="https://www.primefaces.org/layouts/ultima-vue"><img src="./assets/images/layouts/themeswitcher-ultima.png" alt="Ultima" /><span>Ultima</span><span class="theme-badge material">material</span></a></li>
@@ -141,6 +159,14 @@ export default {
                 'mdc-light-deeppurple': 'md-light-deeppurple.svg',
                 'mdc-dark-indigo': 'md-dark-indigo.svg',
                 'mdc-dark-deeppurple': 'md-dark-deeppurple.svg',
+                'lara-dark-indigo': 'lara-dark-indigo.png',
+                'lara-dark-blue': 'lara-dark-blue.png',
+                'lara-dark-purple': 'lara-dark-purple.png',
+                'lara-dark-teal': 'lara-dark-teal.png',
+                'lara-light-indigo': 'lara-light-indigo.png',
+                'lara-light-blue': 'lara-light-blue.png',
+                'lara-light-purple': 'lara-light-purple.png',
+                'lara-light-teal': 'lara-light-teal.png',
                 'saga-blue': 'saga-blue.png',
                 'saga-green': 'saga-green.png',
                 'saga-orange': 'saga-orange.png',
@@ -168,7 +194,8 @@ export default {
                 'viva-light': 'viva-light.svg',
                 'viva-dark': 'viva-dark.svg',
                 'mira': 'mira.jpg',
-                'nano': 'nano.jpg'
+                'nano': 'nano.jpg',
+                'tailwind-light': 'tailwind-light.png',
             }
         }
     },

@@ -1,13 +1,19 @@
 <template>
     <div class="p-panelmenu p-component">
         <template v-for="(item, index) of model">
-            <div v-if="visible(item)" :key="item.label + '_' + index" :class="getPanelClass(item)" :style="item.style">
+            <div v-if="visible(item)" :key="label(item) + '_' + index" :class="getPanelClass(item)" :style="item.style">
                 <div :class="getHeaderClass(item)" :style="item.style">
-                    <a :href="item.url" class="p-panelmenu-header-link" @click="onItemClick($event, item)" :tabindex="item.disabled ? null : '0'"
+                    <router-link v-if="item.to && !disabled(item)" :to="item.to" custom v-slot="{navigate, href, isActive:isRouterActive, isExactActive}">
+                        <a :href="href" :class="getHeaderLinkClass(item, {isRouterActive, isExactActive})" @click="onItemClick($event, item, navigate)" role="treeitem">
+                            <span v-if="item.icon" :class="getPanelIcon(item)"></span>
+                            <span class="p-menuitem-text">{{label(item)}}</span>
+                        </a>
+                    </router-link>
+                    <a v-else :href="item.url" :class="getHeaderLinkClass(item)" @click="onItemClick($event, item)" :tabindex="disabled(item) ? null : '0'"
                         :aria-expanded="isActive(item)" :id="ariaId +'_header'" :aria-controls="ariaId +'_content'">
                         <span v-if="item.items" :class="getPanelToggleIcon(item)"></span>
                         <span v-if="item.icon" :class="getPanelIcon(item)"></span>
-                        <span class="p-menuitem-text">{{item.label}}</span>
+                        <span class="p-menuitem-text">{{label(item)}}</span>
                     </a>
                 </div>
                 <transition name="p-toggleable-content">
@@ -32,6 +38,10 @@ export default {
 		model: {
             type: Array,
             default: null
+        },
+        exact: {
+            type: Boolean,
+            default: true
         }
     },
     data() {
@@ -40,8 +50,8 @@ export default {
         }
     },
     methods: {
-        onItemClick(event, item) {
-            if (item.disabled) {
+        onItemClick(event, item, navigate) {
+            if (this.disabled(item)) {
                 event.preventDefault();
                 return;
             }
@@ -61,6 +71,10 @@ export default {
                 this.activeItem = null;
             else
                 this.activeItem = item;
+
+            if (item.to && navigate) {
+                navigate(event);
+            }
         },
         getPanelClass(item) {
             return ['p-panelmenu-panel', item.class];
@@ -72,14 +86,26 @@ export default {
         getPanelIcon(item) {
             return ['p-menuitem-icon', item.icon];
         },
+        getHeaderLinkClass(item, routerProps) {
+            return ['p-panelmenu-header-link', {
+                'router-link-active': routerProps && routerProps.isActive,
+                'router-link-active-exact': this.exact && routerProps && routerProps.isExactActive
+            }];
+        },
         isActive(item) {
             return item === this.activeItem;
         },
         getHeaderClass(item) {
-            return ['p-component p-panelmenu-header', {'p-highlight': this.isActive(item), 'p-disabled': item.disabled}];
+            return ['p-component p-panelmenu-header', {'p-highlight': this.isActive(item), 'p-disabled': this.disabled(item)}];
         },
         visible(item) {
             return (typeof item.visible === 'function' ? item.visible() : item.visible !== false);
+        },
+        disabled(item) {
+            return (typeof item.disabled === 'function' ? item.disabled() : item.disabled);
+        },
+        label(item) {
+            return (typeof item.label === 'function' ? item.label() : item.label);
         }
     },
     components: {

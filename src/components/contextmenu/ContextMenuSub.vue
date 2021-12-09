@@ -2,19 +2,21 @@
     <transition name="p-contextmenusub" @enter="onEnter">
         <ul ref="container" :class="containerClass" role="menu" v-if="root ? true : parentActive">
             <template v-for="(item, i) of model">
-                <li role="none" :class="getItemClass(item)" :style="item.style" v-if="visible(item) && !item.separator" :key="item.label + i"
+                <li role="none" :class="getItemClass(item)" :style="item.style" v-if="visible(item) && !item.separator" :key="label(item) + i"
                     @mouseenter="onItemMouseEnter($event, item)">
-                    <router-link v-if="item.to && !item.disabled" :to="item.to" :class="getLinkClass(item)" @click.native="onItemClick($event, item)" role="menuitem" v-ripple>
-                        <span :class="['p-menuitem-icon', item.icon]"></span>
-                        <span class="p-menuitem-text">{{item.label}}</span>
+                    <router-link v-if="item.to && !disabled(item)" :to="item.to" custom v-slot="{navigate, href, isActive, isExactActive}">
+                        <a :href="href" :class="linkClass(item, {isActive, isExactActive})" @click.native="onItemClick($event, item, navigate)" role="menuitem" v-ripple>
+                            <span :class="['p-menuitem-icon', item.icon]"></span>
+                            <span class="p-menuitem-text">{{label(item)}}</span>
+                        </a>
                     </router-link>
-                    <a v-else :href="item.url" :class="getLinkClass(item)" :target="item.target" @click="onItemClick($event, item)" v-ripple
-                         :aria-haspopup="item.items != null" :aria-expanded="item === activeItem" role="menuitem"  :tabindex="item.disabled ? null : '0'">
+                    <a v-else :href="item.url" :class="linkClass(item)" :target="item.target" @click="onItemClick($event, item)" v-ripple
+                        :aria-haspopup="item.items != null" :aria-expanded="item === activeItem" role="menuitem"  :tabindex="disabled(item) ? null : '0'">
                         <span :class="['p-menuitem-icon', item.icon]"></span>
-                        <span class="p-menuitem-text">{{item.label}}</span>
+                        <span class="p-menuitem-text">{{label(item)}}</span>
                         <span class="p-submenu-icon pi pi-angle-right" v-if="item.items"></span>
                     </a>
-                    <sub-menu :model="item.items" v-if="visible(item) && item.items" :key="item.label + '_sub_'"
+                    <sub-menu :model="item.items" v-if="visible(item) && item.items" :key="label(item) + '_sub_'"
                         @leaf-click="onLeafClick" :parentActive="item === activeItem" />
                 </li>
                 <li :class="['p-menu-separator', item.class]" :style="item.style" v-if="visible(item) && item.separator" :key="'separator' + i" role="separator"></li>
@@ -41,6 +43,10 @@ export default {
         parentActive: {
             type: Boolean,
             default: false
+        },
+        exact: {
+            type: Boolean,
+            default: true
         }
     },
     watch: {
@@ -57,15 +63,15 @@ export default {
     },
     methods: {
         onItemMouseEnter(event, item) {
-            if (item.disabled) {
+            if (this.disabled(item)) {
                 event.preventDefault();
                 return;
             }
 
             this.activeItem = item;
         },
-        onItemClick(event, item) {
-            if (item.disabled) {
+        onItemClick(event, item, navigate) {
+            if (this.disabled(item)) {
                 event.preventDefault();
                 return;
             }
@@ -83,6 +89,10 @@ export default {
 
             if (!item.items) {
                 this.onLeafClick();
+            }
+
+            if (item.to && navigate) {
+                navigate(event);
             }
         },
         onLeafClick() {
@@ -115,11 +125,21 @@ export default {
                 }
             ]
         },
-        getLinkClass(item) {
-            return ['p-menuitem-link', {'p-disabled': item.disabled}];
+        linkClass(item, routerProps) {
+            return ['p-menuitem-link', {
+                'p-disabled': this.disabled(item),
+                'router-link-active': routerProps && routerProps.isActive,
+                'router-link-active-exact': this.exact && routerProps && routerProps.isExactActive
+            }];
         },
         visible(item) {
             return (typeof item.visible === 'function' ? item.visible() : item.visible !== false);
+        },
+        disabled(item) {
+            return (typeof item.disabled === 'function' ? item.disabled() : item.disabled);
+        },
+        label(item) {
+            return (typeof item.label === 'function' ? item.label() : item.label);
         }
     },
     computed: {

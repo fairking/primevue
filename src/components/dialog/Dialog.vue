@@ -68,6 +68,10 @@ export default {
         position: {
             type: String,
             default: 'center'
+        },
+        appendTo: {
+            type: String,
+            default: null
         }
     },
     data() {
@@ -80,20 +84,12 @@ export default {
     },
     documentKeydownListener: null,
     updated() {
-        this.removeStylesFromMask();
-
         if (this.visible && !this.maskVisible) {
             this.maskVisible = true;
         }
-
-        if (this.modal && this.$refs.mask && !DomHandler.hasClass(this.$refs.mask, 'p-component-overlay')) {
-            DomHandler.addClass(this.$refs.mask, 'p-component-overlay');
-        }
-    },
-    mounted() {
-        this.removeStylesFromMask();
     },
     beforeDestroy() {
+        this.restoreAppend();
         this.disableDocumentSettings();
     },
     methods: {
@@ -107,13 +103,15 @@ export default {
         },
         onEnter() {
             this.$refs.mask.style.zIndex = String(parseInt(this.$refs.dialog.style.zIndex, 10) - 1);
-
+            this.removeStylesFromMask();
+            this.appendContainer();
+            this.alignOverlay();
             this.$emit('show');
             this.focus();
             this.enableDocumentSettings();
         },
         onBeforeLeave() {
-            DomHandler.addClass(this.$refs.mask, 'p-dialog-mask-leave');
+            DomHandler.addClass(this.$refs.mask, 'p-component-overlay-leave');
         },
         onLeave() {
             this.$emit('hide');
@@ -222,9 +220,31 @@ export default {
                 }
 
                 this.dialogClasses = this.$vnode.data.class || this.$vnode.data.staticClass;
-                if (this.dialogClasses) {
-                    this.$refs.mask.classList = 'p-dialog-mask' + (this.modal && ' p-component-overlay ') + this.getPositionClass();
-                }
+            }
+        },
+        alignOverlay() {
+            if (this.appendTo) {
+                DomHandler.absolutePosition(this.$refs.dialog, this.$refs.mask);
+                this.$refs.dialog.style.minWidth = DomHandler.getOuterWidth(this.$refs.mask) + 'px';
+            }
+            else {
+                DomHandler.relativePosition(this.$refs.dialog, this.$refs.mask);
+            }
+        },
+        appendContainer() {
+            if (this.appendTo) {
+                if (this.appendTo === 'body')
+                    document.body.appendChild(this.$refs.dialog);
+                else
+                    document.getElementById(this.appendTo).appendChild(this.$refs.dialog);
+            }
+        },
+        restoreAppend() {
+            if (this.$refs.overlay && this.appendTo) {
+                if (this.appendTo === 'body')
+                    document.body.removeChild(this.$refs.dialog);
+                else
+                    document.getElementById(this.appendTo).removeChild(this.$refs.dialog);
             }
         }
     },
@@ -235,7 +255,7 @@ export default {
             };
         },
         maskClass() {
-            return ['p-dialog-mask', this.getPositionClass()];
+            return ['p-dialog-mask', {'p-component-overlay p-component-overlay-enter': this.modal}, this.getPositionClass()];
         },
         dialogClass() {
             return ['p-dialog p-component', {
@@ -275,8 +295,6 @@ export default {
     justify-content: center;
     align-items: center;
     pointer-events: none;
-    background-color: transparent;
-    transition-property: background-color;
 }
 
 .p-dialog-mask.p-component-overlay {
@@ -336,10 +354,6 @@ export default {
 .p-dialog-leave-to {
     opacity: 0;
     transform: scale(0.7);
-}
-
-.p-dialog-mask.p-dialog-mask-leave {
-    background-color: transparent;
 }
 
 /* Top, Bottom, Left, Right, Top* and Bottom* */

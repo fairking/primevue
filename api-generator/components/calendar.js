@@ -54,6 +54,12 @@ const CalendarProps = [
         description: "Number of months to display."
     },
     {
+        name: "responsiveOptions",
+        type: "array",
+        default: "null",
+        description: "An array of options for responsive design."
+    },
+    {
         name: "view",
         type: "string",
         default: "date",
@@ -221,6 +227,30 @@ const CalendarProps = [
         type: "string",
         default: "null",
         description: 'Id of the element or "body" for document where the overlay should be appended to.'
+    },
+    {
+        name: "inputStyle",
+        type: "any",
+        default: "null",
+        description: "Inline style of the input field."
+    },
+    {
+        name: "inputClass",
+        type: "string",
+        default: "null",
+        description: "Style class of the input field."
+    },
+    {
+        name: "class",
+        type: "string",
+        default: "null",
+        description: "Style class of the component."
+    },
+    {
+        name: "style",
+        type: "any",
+        default: "null",
+        description: "Inline style of the component."
     }
 ];
 

@@ -161,9 +161,15 @@ export default {
 </CodeHighlight>
 
                 <h5>Month Picker</h5>
-                <p>Month picker is used to select month and year only without the date, set view mode as "month" to activate month picker.</p>
+                <p>Month picker is used to select month and year only without the date, set <i>view</i>i> mode as "month" to activate month picker.</p>
 <CodeHighlight>
-&lt;Calendar v-model="value" view="month" dateFormat="mm/yy" :yearNavigator="true" yearRange="2000:2030" /&gt;
+&lt;Calendar v-model="value" view="month" dateFormat="mm/yy" /&gt;
+</CodeHighlight>
+
+                <h5>Year Picker</h5>
+                <p>Similar to the month picker, year picker can be used to select years only. Set <i>view</i> to "year" to display the year picker.</p>
+<CodeHighlight>
+&lt;Calendar v-model="value" view="year" dateFormat="yy" /&gt;
 </CodeHighlight>
 
                 <h5>Touch UI</h5>
@@ -240,10 +246,16 @@ export default {
                                 <td>Number of months to display.</td>
                             </tr>
                             <tr>
+                                <td>responsiveOptions</td>
+                                <td>any</td>
+                                <td>null</td>
+                                <td>An array of options for responsive design.</td>
+                            </tr>
+                            <tr>
                                 <td>view</td>
                                 <td>string</td>
                                 <td>date</td>
-                                <td>Type of view to display, valid values are "date" for datepicker and "month" for month picker.</td>
+                                <td>Type of view to display, valid values are "date", "month" and "year".</td>
                             </tr>
                             <tr>
                                 <td>touchUI</td>
@@ -252,22 +264,23 @@ export default {
                                 <td>When enabled, calendar overlay is displayed as optimized for touch devices.</td>
                             </tr>
                             <tr>
-                                <td>monthNavigator</td>
+                                <td style="text-decoration: line-through">monthNavigator</td>
                                 <td>boolean</td>
                                 <td>false</td>
-                                <td>Whether the month should be rendered as a dropdown instead of text.</td>
+                                <td>Whether the month should be rendered as a dropdown instead of text. <br /> <br />  <b> Deprecated: </b> Navigator is always on</td>
                             </tr>
                             <tr>
-                                <td>yearNavigator</td>
+                                <td style="text-decoration: line-through">yearNavigator</td>
                                 <td>boolean</td>
                                 <td>false</td>
-                                <td>Whether the year should be rendered as a dropdown instead of text.</td>
+                                <td>Whether the year should be rendered as a dropdown instead of text. <br /> <br /> <b> Deprecated: </b> Navigator is always on.</td>
                             </tr>
                             <tr>
-                                <td>yearRange</td>
+                                <td style="text-decoration: line-through">yearRange</td>
                                 <td>string</td>
                                 <td>null</td>
-                                <td>The range of years displayed in the year drop-down in (nnnn:nnnn) format such as (2000:2020).</td>
+                                <td>The range of years displayed in the year drop-down in (nnnn:nnnn) format such as (2000:2020). <br><br>
+                                <b> Deprecated: </b> Years are based on decades by default.</td>
                             </tr>
                             <tr>
                                 <td>panelClass</td>
@@ -418,6 +431,30 @@ export default {
                                 <td>string</td>
                                 <td>null</td>
                                 <td>Id of the element or "body" for document where the overlay should be appended to.</td>
+                            </tr>
+                            <tr>
+                                <td>inputStyle</td>
+                                <td>any</td>
+                                <td>null</td>
+                                <td>Inline style of the input field.</td>
+                            </tr>
+                            <tr>
+                                <td>inputClass</td>
+                                <td>string</td>
+                                <td>null</td>
+                                <td>Style class of the input field.</td>
+                            </tr>
+                            <tr>
+                                <td>styles</td>
+                                <td>any</td>
+                                <td>null</td>
+                                <td>Inline style of the component.</td>
+                            </tr>
+                            <tr>
+                                <td>className</td>
+                                <td>string</td>
+                                <td>null</td>
+                                <td>Style class of the component.</td>
                             </tr>
                         </tbody>
                     </table>
@@ -634,7 +671,7 @@ export default {
     &lt;div class="p-field p-col-12 p-md-4"&gt;
         &lt;label for="datetemplate"&gt;Date Template&lt;/label&gt;
         &lt;Calendar id="datetemplate" v-model="date12"&gt;
-           &lt;template #date="slotProps"&gt;
+            &lt;template #date="slotProps"&gt;
                 &lt;strong v-if="slotProps.date.day &gt; 10 && slotProps.date.day &lt; 15" class="special-day"&gt;{{slotProps.date.day}}&lt;/strong&gt;
                 &lt;template v-else&gt;&#123;&#123;slotProps.date.day&#125;&#125;}&lt;/template&gt;
             &lt;/template&gt;

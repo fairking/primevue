@@ -5,6 +5,8 @@ declare class Dock extends Vue {
     model?: any[];
     className?: string;
     styles?: any;
+    tooltipOptions?: any;
+    exact?: boolean;
     $slots: {
         'item': VNode[];
     }

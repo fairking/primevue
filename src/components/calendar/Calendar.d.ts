@@ -23,6 +23,7 @@ declare class Calendar extends Vue {
     showIcon?: boolean;
     icon?: string;
     numberOfMonths?: number;
+    responsiveOptions?: any[];
     view?: string;
     touchUI?: boolean;
     monthNavigator?: boolean;
@@ -54,6 +55,10 @@ declare class Calendar extends Vue {
     locale?: LocaleSettings;
     ariaLabelledBy?: string;
     appendTo?: string;
+    inputStyle?: any;
+    inputClass?: string;
+    style?: any;
+    class?: string;
     $emit(eventName: 'show'): this;
     $emit(eventName: 'hide'): this;
     $emit(eventName: 'month-change', e: { month: number, year: number }): this;

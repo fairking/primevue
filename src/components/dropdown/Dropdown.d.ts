@@ -3,9 +3,9 @@ import Vue, { VNode } from 'vue';
 declare class Dropdown extends Vue {
     value?: any;
     options?: any[];
-    optionLabel?: string;
-    optionValue?: any;
-    optionDisabled?: boolean;
+    optionLabel?: string | ((data: any) => string) | undefined;
+    optionValue?: string | ((data: any) => any) | undefined;
+    optionDisabled?: string | ((data: any) => boolean) | undefined;
     scrollHeight?: string;
     filter?: boolean;
     filterPlaceholder?: string;
@@ -29,6 +29,8 @@ declare class Dropdown extends Vue {
     $emit(eventName: 'filter', e: { originalEvent: Event, value: string }): this;
     $slot: {
         option: VNode[];
+        value: VNode[];
+        indicator: VNode[];
     }
 }
 
