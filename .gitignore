@@ -31,6 +31,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+*.orig
 
 # Themes
 public/themes/soho-light/
