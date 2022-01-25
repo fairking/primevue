@@ -475,6 +475,11 @@ export default class DomHandler {
         return visibleFocusableElements;
     }
 
+    static getFirstFocusableElement(element) {
+        const focusableElements = this.getFocusableElements(element);
+        return focusableElements.length > 0 ? focusableElements[0] : null;
+    }
+
     static isClickable(element) {
         const targetNode = element.nodeName;
         const parentNode = element.parentElement && element.parentElement.nodeName;
@@ -484,6 +489,17 @@ export default class DomHandler {
                 this.hasClass(element, 'p-button') || this.hasClass(element.parentElement, 'p-button') ||
                 this.hasClass(element.parentElement, 'p-checkbox') || this.hasClass(element.parentElement, 'p-radiobutton')
         );
+    }
+
+    static applyStyle(element, style) {
+        if (typeof style === 'string') {
+            element.style.cssText = this.style;
+        }
+        else {
+            for (let prop in this.style) {
+                element.style[prop] = style[prop];
+            }
+        }
     }
 
     static isIOS() {

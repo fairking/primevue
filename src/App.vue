@@ -2,8 +2,8 @@
     <div class="layout-wrapper" :class="containerClass">
         <a class="layout-news" href="https://www.primefaces.org/store" target="_blank" tabindex="-1" v-if="newsActive">
             <div class="layout-news-container">
-                <img class="layouts-news-mockup-image" alt="primeblocks" src="./assets/images/topbar-blackfriday.png">
-                <a href="https://www.primefaces.org/store" target="_blank" tabindex="-1" style="text-decoration: none" class="layout-news-button">
+                <img class="layouts-news-mockup-image" alt="primeblocks" src="./assets/images/topbar-primeblocks-device.png">
+                <a href="https://www.primefaces.org/primeblocks-vue" target="_blank" tabindex="-1" style="text-decoration: none" class="layout-news-button">
                     LEARN MORE
                     <i class="pi pi-angle-right"></i>
                 </a>
@@ -131,7 +131,7 @@ export default {
         containerClass() {
             return [{
                 'layout-news-active': this.newsActive,
-                'p-input-filled': this.$appState.inputStyle === 'filled',
+                'p-input-filled': this.$primevue.config.inputStyle === 'filled',
                 'p-ripple-disabled': this.$primevue.config.ripple === false
             }];
         }

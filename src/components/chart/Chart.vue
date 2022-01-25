@@ -5,16 +5,20 @@
 </template>
 
 <script>
-// import * as Chart from 'chart.js/auto';
-
 export default {
     props: {
         type: String,
         data: null,
         options: null,
         plugins: null,
-        width: Number,
-        height: Number
+        width: {
+            type: Number,
+            default: 300
+        },
+        height: {
+            type: Number,
+            default: 150
+        }
     },
     chart: null,
     mounted() {
@@ -49,10 +53,15 @@ export default {
                         plugins: this.plugins
                     });
                 }
+
+                this.$emit('loaded', this.chart);
             });
         },
         getCanvas() {
             return this.$canvas;
+        },
+        getChart() {
+            return this.chart;
         },
         getBase64Image() {
             return this.chart.toBase64Image();
